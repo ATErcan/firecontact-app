@@ -16,10 +16,13 @@ import {
   Titles,
   TitleStyles,
 } from "../style/AddContact.styled";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { addNewContact } from "../utils/firebase";
+import { ContactsContext } from "../context/ContactsContextProvider";
 
 const AddContact = () => {
+  const { setContacts, setContactTrigger } = useContext(ContactsContext);
+
   const [phoneNum, setPhoneNum] = useState("");
   const [contactInfo, setContactInfo] = useState({
     username: "",
@@ -42,6 +45,7 @@ const AddContact = () => {
       addNewContact(contactInfo, phoneNum);
       setPhoneNum("");
       setContactInfo("");
+      setContactTrigger((prevToggle) => !prevToggle);
     } else {
       console.log("invalid");
     }

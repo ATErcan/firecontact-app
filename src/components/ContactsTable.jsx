@@ -1,9 +1,8 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import { ContactsContext } from "../context/ContactsContextProvider";
-import { getContacts } from "../utils/firebase";
 
 const ContactsTable = () => {
-  const { contacts, setContacts } = useContext(ContactsContext);
+  const { contacts } = useContext(ContactsContext);
 
   const capitalizeFirstLetter = (word) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
