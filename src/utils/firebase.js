@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection } from "firebase/firestore";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -15,3 +15,18 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const contactsCollectionRef = collection(db, "contacts");
+
+export const getContacts = async () => {
+  const { docs } = await getDocs(contactsCollectionRef);
+  const newTasks = docs.map((doc) => {
+    const obj = doc._document.data.value.mapValue.fields;
+    return {
+      id: doc.id,
+      username: obj.username.stringValue,
+      phone: obj.phone.integerValue,
+      gender: obj.gender.stringValue,
+      docId: obj.docId.timestampValue,
+    };
+  });
+  return newTasks;
+};
