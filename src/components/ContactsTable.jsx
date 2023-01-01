@@ -1,14 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { ContactsContext } from "../context/ContactsContextProvider";
 import { getContacts } from "../utils/firebase";
 
 const ContactsTable = () => {
-  const [contacts, setContacts] = useState([]);
+  const { contacts, setContacts } = useContext(ContactsContext);
 
-  useEffect(() => {
-    getContacts().then((res) => setContacts(res));
-  }, []);
+  const capitalizeFirstLetter = (word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  };
 
-  console.log(contacts);
+  const sortedContacts = contacts.sort((a, b) => {
+    return new Date(b.docId) - new Date(a.docId);
+  });
+
+  const printContacts = sortedContacts.map((contact) => {
+    return (
+      <tr key={contact.id}>
+        <td>{capitalizeFirstLetter(contact.username)}</td>
+        <td>{contact.phone}</td>
+        <td>{capitalizeFirstLetter(contact.gender)}</td>
+        <td>Trash</td>
+        <td>Edit</td>
+      </tr>
+    );
+  });
 
   return (
     <div>
@@ -22,7 +37,7 @@ const ContactsTable = () => {
             <th>Edit</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>{printContacts}</tbody>
       </table>
     </div>
   );
