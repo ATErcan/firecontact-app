@@ -16,29 +16,35 @@ import {
   Titles,
   TitleStyles,
 } from "../style/AddContact.styled";
-import { useState, useRef } from "react";
+import { useState } from "react";
+import { addNewContact } from "../utils/firebase";
 
 const AddContact = () => {
   const [phoneNum, setPhoneNum] = useState("");
+  const [contactInfo, setContactInfo] = useState({
+    username: "",
+    gender: "",
+  });
 
-  const nameRef = useRef(null);
-  const genderRef = useRef(null);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setContactInfo((prevInfo) => {
+      return {
+        ...prevInfo,
+        [name]: value,
+      };
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isValidPhoneNumber(phoneNum.toString())) {
-      console.log("send");
+    if (phoneNum && isValidPhoneNumber(phoneNum?.toString())) {
+      addNewContact(contactInfo, phoneNum);
+      setPhoneNum("");
+      setContactInfo("");
     } else {
       console.log("invalid");
     }
-  };
-
-  const sendContactData = () => {
-    return {
-      username: nameRef.current.value,
-      phone: phoneNum,
-      gender: genderRef.current.value,
-    };
   };
 
   return (
@@ -53,7 +59,9 @@ const AddContact = () => {
             id="input-with-sx"
             label="Name"
             variant="standard"
-            ref={nameRef}
+            name="username"
+            value={contactInfo.username || ""}
+            onChange={handleChange}
             required
           />
         </Box>
@@ -69,8 +77,9 @@ const AddContact = () => {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             label="Gender"
-            value="male"
-            ref={genderRef}
+            name="gender"
+            value={contactInfo.gender || ""}
+            onChange={handleChange}
             required
           >
             <MenuItem value="male">Male</MenuItem>

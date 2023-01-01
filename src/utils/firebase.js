@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -29,4 +29,14 @@ export const getContacts = async () => {
     };
   });
   return newTasks;
+};
+
+export const addNewContact = async (contactInfo, num) => {
+  const newContact = {
+    username: contactInfo.username,
+    phone: Number(num),
+    gender: contactInfo.gender,
+    docId: new Date(),
+  };
+  await addDoc(contactsCollectionRef, newContact);
 };
