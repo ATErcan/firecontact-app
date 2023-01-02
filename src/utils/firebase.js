@@ -1,5 +1,12 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -39,4 +46,9 @@ export const addNewContact = async (contactInfo, num) => {
     docId: new Date(),
   };
   await addDoc(contactsCollectionRef, newContact);
+};
+
+export const deleteContact = async (id) => {
+  const contactDoc = doc(db, "contacts", id);
+  await deleteDoc(contactDoc);
 };

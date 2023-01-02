@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { ContactsContext } from "../context/ContactsContextProvider";
+import SingleContact from "./SingleContact";
 
 const ContactsTable = () => {
   const { contacts } = useContext(ContactsContext);
 
-  const capitalizeFirstLetter = (word) => {
-    return word.charAt(0).toUpperCase() + word.slice(1);
+  const findContact = (id) => {
+    const choosenItem = contacts.map((contact) => id === contact.id)[0];
   };
 
   const sortedContacts = contacts.sort((a, b) => {
@@ -13,15 +14,7 @@ const ContactsTable = () => {
   });
 
   const printContacts = sortedContacts.map((contact) => {
-    return (
-      <tr key={contact.id}>
-        <td>{capitalizeFirstLetter(contact.username)}</td>
-        <td>{contact.phone}</td>
-        <td>{capitalizeFirstLetter(contact.gender)}</td>
-        <td>Trash</td>
-        <td>Edit</td>
-      </tr>
-    );
+    return <SingleContact key={contact.id} contact={contact} />;
   });
 
   return (

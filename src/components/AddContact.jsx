@@ -21,7 +21,7 @@ import { addNewContact } from "../utils/firebase";
 import { ContactsContext } from "../context/ContactsContextProvider";
 
 const AddContact = () => {
-  const { setContacts, setContactTrigger } = useContext(ContactsContext);
+  const { setContactTrigger } = useContext(ContactsContext);
 
   const [phoneNum, setPhoneNum] = useState("");
   const [contactInfo, setContactInfo] = useState({
