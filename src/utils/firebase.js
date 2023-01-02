@@ -6,6 +6,7 @@ import {
   addDoc,
   doc,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -38,17 +39,28 @@ export const getContacts = async () => {
   return newTasks;
 };
 
-export const addNewContact = async (contactInfo, num) => {
+export const createContact = (contactInfo, num) => {
   const newContact = {
     username: contactInfo.username,
     phone: Number(num),
     gender: contactInfo.gender,
     docId: new Date(),
   };
+  return newContact;
+};
+
+export const addNewContact = async (contactInfo, num) => {
+  const newContact = createContact(contactInfo, num);
   await addDoc(contactsCollectionRef, newContact);
 };
 
 export const deleteContact = async (id) => {
   const contactDoc = doc(db, "contacts", id);
   await deleteDoc(contactDoc);
+};
+
+export const updateContact = async (contactInfo, num, edit) => {
+  const contactDoc = doc(db, "contacts", edit.id);
+  const newContact = createContact(contactInfo, num);
+  await updateDoc(contactDoc, newContact);
 };

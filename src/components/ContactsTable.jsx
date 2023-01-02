@@ -5,14 +5,12 @@ import SingleContact from "./SingleContact";
 const ContactsTable = () => {
   const { contacts } = useContext(ContactsContext);
 
-  const findContact = (id) => {
-    const choosenItem = contacts.map((contact) => id === contact.id)[0];
-  };
-
+  // function to sort new added to the top
   const sortedContacts = contacts.sort((a, b) => {
     return new Date(b.docId) - new Date(a.docId);
   });
 
+  // mapping and calling SingleContact component for each table row
   const printContacts = sortedContacts.map((contact) => {
     return <SingleContact key={contact.id} contact={contact} />;
   });

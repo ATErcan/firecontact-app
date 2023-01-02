@@ -16,12 +16,12 @@ import {
   Titles,
   TitleStyles,
 } from "../style/AddContact.styled";
-import { useContext, useState } from "react";
-import { addNewContact } from "../utils/firebase";
+import { useContext, useEffect, useState } from "react";
+import { addNewContact, updateContact } from "../utils/firebase";
 import { ContactsContext } from "../context/ContactsContextProvider";
 
 const AddContact = () => {
-  const { setContactTrigger } = useContext(ContactsContext);
+  const { setContactTrigger, edit, setEdit } = useContext(ContactsContext);
 
   const [phoneNum, setPhoneNum] = useState("");
   const [contactInfo, setContactInfo] = useState({
@@ -29,6 +29,18 @@ const AddContact = () => {
     gender: "",
   });
 
+  // changes the inputs if edit action triggered
+  useEffect(() => {
+    if (edit) {
+      setContactInfo({
+        username: edit.username,
+        gender: edit.gender,
+      });
+      setPhoneNum("+" + edit.phone);
+    }
+  }, [edit]);
+
+  // function to track values of name and gender inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
     setContactInfo((prevInfo) => {
@@ -39,10 +51,21 @@ const AddContact = () => {
     });
   };
 
+  // function to detect if the process is editing of adding new contact
+  const detectProcess = () => {
+    if (edit) {
+      updateContact(contactInfo, phoneNum, edit);
+      setEdit("");
+    } else {
+      addNewContact(contactInfo, phoneNum);
+    }
+  };
+
+  // function to send the data to firestore
   const handleSubmit = (e) => {
     e.preventDefault();
     if (phoneNum && isValidPhoneNumber(phoneNum?.toString())) {
-      addNewContact(contactInfo, phoneNum);
+      detectProcess();
       setPhoneNum("");
       setContactInfo("");
       setContactTrigger((prevToggle) => !prevToggle);

@@ -5,13 +5,20 @@ import { ContactsContext } from "../context/ContactsContextProvider";
 import { deleteContact } from "../utils/firebase";
 
 const SingleContact = ({ contact }) => {
-  const { setContactTrigger } = useContext(ContactsContext);
+  const { setContactTrigger, editInfo } = useContext(ContactsContext);
 
+  // delete contact
   const handleDelete = () => {
     deleteContact(contact.id);
     setContactTrigger((prevToggle) => !prevToggle);
   };
 
+  // sends the data to AddContact component to edit
+  const handleEdit = () => {
+    editInfo(contact);
+  };
+
+  // function to capitalize first letter of some inputs like name and gender
   const capitalizeFirstLetter = (word) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
   };
@@ -27,7 +34,7 @@ const SingleContact = ({ contact }) => {
         <DeleteOutlineIcon color="error" onClick={handleDelete} />
       </td>
       <td>
-        <EditIcon color="primary" />
+        <EditIcon color="primary" onClick={handleEdit} />
       </td>
     </tr>
   );
