@@ -11,7 +11,7 @@ export const ContactsContainer = styled.div`
   border-radius: 10px;
   @media screen and (min-width: 768px) {
     margin-top: 0;
-    max-height: calc(100vh - 202px);
+    max-height: calc(100vh - 206px);
     overflow-y: auto;
     padding: 2rem;
   }
@@ -28,6 +28,7 @@ export const TableContacts = styled.table`
   width: 100%;
   margin: auto;
   text-align: center;
+  font-family: "Quattrocento Sans", sans-serif;
 `;
 
 export const TableHeadRow = styled.thead`

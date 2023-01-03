@@ -1,8 +1,10 @@
+import { Tab } from "@mui/material";
 import { useContext } from "react";
 import { ContactsContext } from "../context/ContactsContextProvider";
-import { Titles, TitleStyles } from "../style/AddContact.styled";
+import { TitleStyles } from "../style/AddContact.styled";
 import {
   ContactsContainer,
+  TableCells,
   TableContacts,
   TableContainer,
   TableHeading,
@@ -26,7 +28,7 @@ const ContactsTable = () => {
   return (
     <ContactsContainer>
       <TitleStyles>
-        <Titles>Contacts</Titles>
+        <h3>Contacts</h3>
       </TitleStyles>
       <TableContainer>
         <TableContacts>
@@ -39,7 +41,15 @@ const ContactsTable = () => {
               <TableHeading>Edit</TableHeading>
             </tr>
           </TableHeadRow>
-          <tbody>{printContacts}</tbody>
+          <tbody>
+            {contacts.length > 0 ? (
+              printContacts
+            ) : (
+              <tr>
+                <TableCells colSpan={5}>Nothing Found</TableCells>
+              </tr>
+            )}
+          </tbody>
         </TableContacts>
       </TableContainer>
     </ContactsContainer>

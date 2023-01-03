@@ -16,9 +16,8 @@ export const AddContactContainer = styled.div`
 export const TitleStyles = styled.div`
   text-align: center;
   font-size: 1.5rem;
+  font-family: "Playfair Display SC", serif;
 `;
-
-export const Titles = styled.h3``;
 
 export const FormContainer = styled.form`
   display: flex;

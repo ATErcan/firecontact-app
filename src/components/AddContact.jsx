@@ -13,12 +13,12 @@ import Button from "@mui/material/Button";
 import {
   AddContactContainer,
   FormContainer,
-  Titles,
   TitleStyles,
 } from "../style/AddContact.styled";
 import { useContext, useEffect, useState } from "react";
 import { addNewContact, updateContact } from "../utils/firebase";
 import { ContactsContext } from "../context/ContactsContextProvider";
+import { toastErrorNotify, toastSuccessNotify } from "../helpers/ToastNotify";
 
 const AddContact = () => {
   const { setContactTrigger, edit, setEdit } = useContext(ContactsContext);
@@ -56,8 +56,10 @@ const AddContact = () => {
     if (edit) {
       updateContact(contactInfo, phoneNum, edit);
       setEdit("");
+      toastSuccessNotify("Contact Updated Successfully!");
     } else {
       addNewContact(contactInfo, phoneNum);
+      toastSuccessNotify("Contact Added Successfully!");
     }
   };
 
@@ -70,14 +72,14 @@ const AddContact = () => {
       setContactInfo("");
       setContactTrigger((prevToggle) => !prevToggle);
     } else {
-      console.log("invalid");
+      toastErrorNotify("Please enter a valid phone number!");
     }
   };
 
   return (
     <AddContactContainer>
       <TitleStyles>
-        <Titles>AddContact</Titles>
+        <h3>AddContact</h3>
       </TitleStyles>
       <FormContainer onSubmit={handleSubmit}>
         <Box sx={{ display: "flex", alignItems: "flex-end" }}>

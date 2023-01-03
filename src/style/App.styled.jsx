@@ -6,7 +6,7 @@ export const AppContainer = styled.div`
   row-gap: 1rem;
   padding: 1rem;
   @media screen and (min-width: 768px) {
-    height: calc(100vh - 101px);
+    height: calc(100vh - 103px);
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
