@@ -79,13 +79,13 @@ const AddContact = () => {
   return (
     <AddContactContainer>
       <TitleStyles>
-        <h3>AddContact</h3>
+        <h3>Add Contact</h3>
       </TitleStyles>
       <FormContainer onSubmit={handleSubmit}>
         <Box sx={{ display: "flex", alignItems: "flex-end" }}>
           <AccountCircle sx={{ color: "action.active", mx: 1, my: 0.5 }} />
           <TextField
-            id="input-with-sx"
+            id="username"
             label="Name"
             variant="standard"
             name="username"
